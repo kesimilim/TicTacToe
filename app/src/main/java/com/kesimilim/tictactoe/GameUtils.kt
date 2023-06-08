@@ -1,6 +1,6 @@
 package com.kesimilim.tictactoe
 
-import java.util.Random
+import kotlin.random.Random
 
 object GameUtils {
     const val PLAYER_X = "X" //player 1
@@ -40,13 +40,12 @@ object GameUtils {
         return if (possibleMoves.isEmpty()) {
             -1
         } else {
-            val index = Random().nextInt(possibleMoves.count())
+            val index = Random.Default.nextInt(possibleMoves.count())
             possibleMoves[index]
         }
     }
 
     /**
-     * Выбирает случайный ход для компьютера в порядке приоритета, чтобы компьютер выиграл. Он имитирует ИИ
      * Chooses a random move for the computer based on the order of
      * priority to make the computer win. It mimics AI
      * */
@@ -70,7 +69,7 @@ object GameUtils {
         }
 
         //try to make corners if it is free
-        val move = chooseRandomMove(board, arrayListOf(0, 2, 6, 8))
+        val move = chooseRandomMove(board, arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8))
         if (move != -1) return move
 
         //try to take center if it is free

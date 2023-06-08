@@ -47,13 +47,13 @@ class MainActivity : ComponentActivity() {
                             verticalArrangement = Arrangement.SpaceAround,
                             modifier = Modifier.padding(top = 40.dp)
                         ) {
-                            ButtonGrid(board = mainViewModel.board, mainViewModel::play)
-                            ResetButton(onClick = mainViewModel::reset)
+                            ButtonGrid(board = mainViewModel.gameMode.board) { move -> mainViewModel.gameMode.play(move = move) }
+                            ResetButton(onClick = { mainViewModel.gameMode.reset() })
 
-                            if (mainViewModel.isGameOver) {
+                            if (mainViewModel.gameMode.isGameOver) {
                                 Box {
                                     Text(
-                                        text = "Game is Over: ${mainViewModel.winner}",
+                                        text = "Game is Over: ${mainViewModel.gameMode.winner}",
                                         fontSize = 20.sp
                                     )
                                 }
