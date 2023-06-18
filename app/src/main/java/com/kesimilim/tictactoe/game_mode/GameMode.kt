@@ -6,5 +6,7 @@ interface GameMode {
     val board: ArrayList<String>
 
     fun play(move: Int)
+    fun computerMoveX()
+    fun computerMoveO()
     fun reset()
 }

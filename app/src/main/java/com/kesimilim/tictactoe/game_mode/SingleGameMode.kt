@@ -1,57 +1,32 @@
 package com.kesimilim.tictactoe.game_mode
 
-import android.util.Log
 import com.kesimilim.tictactoe.GameUtils
+import com.kesimilim.tictactoe.GameUtils.PLAYER_O
+import com.kesimilim.tictactoe.GameUtils.PLAYER_X
+import com.kesimilim.tictactoe.GameUtils.isBoardFull
+import com.kesimilim.tictactoe.GameUtils.isGameWon
 
 class SingleGameMode: BaseGameMode() {
 
-    override fun play(move: Int) {
-        if (isGameOver) return
+    override fun computerMoveX() {
+        if (!isBoardFull(board) && !isGameWon(board, PLAYER_O)) {
+            val nextMove = GameUtils.computerMove(board)
 
-        if (board[move] == "") {
-            if (currentPlayer == GameUtils.PLAYER_X) {
-                board = ArrayList(board.toMutableList().also {
-                    it[move] = GameUtils.PLAYER_X
-                })
-                currentPlayer = GameUtils.PLAYER_O
-
-                if (!GameUtils.isBoardFull(board) && !GameUtils.isGameWon(board, GameUtils.PLAYER_X)) {
-                    val nextMove = GameUtils.computerMove(board)
-
-                    board = ArrayList(board.toMutableList().also {
-                        it[nextMove] = GameUtils.PLAYER_O
-                    })
-                }
-                currentPlayer = GameUtils.PLAYER_X
-
-            } else {
-                board = ArrayList(board.toMutableList().also {
-                    it[move] = GameUtils.PLAYER_O
-                })
-                currentPlayer = GameUtils.PLAYER_X
-
-                if (!GameUtils.isBoardFull(board) && !GameUtils.isGameWon(board, GameUtils.PLAYER_O)) {
-                    val nextMove = GameUtils.computerMove(board)
-
-                    board = ArrayList(board.toMutableList().also {
-                        it[nextMove] = GameUtils.PLAYER_X
-                    })
-                }
-                currentPlayer = GameUtils.PLAYER_O
-            }
+            board = ArrayList(board.toMutableList().also {
+                it[nextMove] = PLAYER_X
+            })
         }
-
-        //calculate and show game result
-        isGameOver = GameUtils.isGameWon(board, GameUtils.PLAYER_X) || GameUtils.isGameWon(
-            board,
-            GameUtils.PLAYER_O
-        ) || GameUtils.isBoardFull(board)
-        winner = GameUtils.gameResult(board, singleMode = true)
-
-        Log.d(TAG, "$board")
+        currentPlayer = PLAYER_O
     }
 
-    companion object {
-        private const val TAG = "SingleGameMode"
+    override fun computerMoveO() {
+        if (!isBoardFull(board) && !isGameWon(board, PLAYER_X)) {
+            val nextMove = GameUtils.computerMove(board)
+
+            board = ArrayList(board.toMutableList().also {
+                it[nextMove] = PLAYER_O
+            })
+        }
+        currentPlayer = PLAYER_X
     }
 }
